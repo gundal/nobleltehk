@@ -178,7 +178,6 @@ int inode_init_always(struct super_block *sb, struct inode *inode)
 #ifdef CONFIG_CRYPTO_FIPS
 	mapping->cc_enable = 0;
 #endif
-	mapping->plain_text = 0;
 #endif
 #ifdef CONFIG_SDP
 	mapping->userid = 0;
@@ -1643,8 +1642,8 @@ int file_remove_suid(struct file *file)
 		error = security_inode_killpriv(dentry);
 	if (!error && killsuid)
 		error = __remove_suid(dentry, killsuid);
-	if (!error)
-		inode_has_no_xattr(inode);
+	if (!error && (inode->i_sb->s_flags & MS_NOSEC))
+		inode->i_flags |= S_NOSEC;
 
 	return error;
 }
