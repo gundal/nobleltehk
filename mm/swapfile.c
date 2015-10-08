@@ -715,6 +715,7 @@ out:
 }
 
 /*
+
  * We can write to an anon page without COW if there are no other references
  * to it.  And as a side-effect, free up its swap: because the old content
  * on disk will never be read, and seeking back there to write new content

@@ -838,7 +838,6 @@ static ssize_t set_sensor_dot(struct device *dev,
 
 	return size;
 }
-
 static ssize_t set_send_instruction(struct device *dev,
 	struct device_attribute *attr, const char *buf, size_t size)
 {
@@ -972,6 +971,7 @@ static DEVICE_ATTR(sensor_axis, S_IRUGO | S_IWUSR | S_IWGRP,
 	show_sensor_axis, set_sensor_axis);
 static DEVICE_ATTR(sensor_dot, S_IRUGO | S_IWUSR | S_IWGRP,
 	show_sensor_dot, set_sensor_dot);
+
 static DEVICE_ATTR(send_instruction, S_IWUSR | S_IWGRP,
 	NULL, set_send_instruction);
 static DEVICE_ATTR(int_gyro_enable, S_IRUGO | S_IWUSR | S_IWGRP,
@@ -1014,6 +1014,7 @@ static struct device_attribute *mcu_attrs[] = {
 	&dev_attr_debug_enable,
 	&dev_attr_sensor_axis,
 	&dev_attr_sensor_dot,
+
 	&dev_attr_send_instruction,
 	&dev_attr_int_gyro_enable,
 	NULL,

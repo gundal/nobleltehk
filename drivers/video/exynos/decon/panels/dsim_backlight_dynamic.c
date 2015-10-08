@@ -673,6 +673,7 @@ static void dsim_panel_gamma_ctrl_for_hmt(struct dsim_device *dsim)
 static void dsim_panel_aid_ctrl_for_hmt(struct dsim_device *dsim)
 {
 	u8 *aid = NULL;
+
 	unsigned char SEQ_AID[AID_CMD_CNT_MAX] = {0, };
 
 	aid = get_aid_from_index_for_hmt(dsim, dsim->priv.hmt_br_index);
@@ -681,6 +682,7 @@ static void dsim_panel_aid_ctrl_for_hmt(struct dsim_device *dsim)
 		dsim_err("%s : faield to get aid value\n", __func__);
 		return;
 	}
+
 
 	SEQ_AID[0] = aid[0];
 	memcpy(&SEQ_AID[1], dsim->priv.aid, aid_dimming_dynamic.aid_cmd_cnt - 1);
@@ -694,6 +696,7 @@ static void dsim_panel_aid_ctrl_for_hmt(struct dsim_device *dsim)
 static void dsim_panel_set_elvss_for_hmt(struct dsim_device *dsim)
 {
 	u8 *elvss = NULL;
+
 	unsigned char SEQ_ELVSS[ELVSS_LEN_MAX] = {0, };
 
 	SEQ_ELVSS[0] = aid_dimming_dynamic.elvss_reg;
@@ -705,10 +708,12 @@ static void dsim_panel_set_elvss_for_hmt(struct dsim_device *dsim)
 	memcpy(&SEQ_ELVSS[1], dsim->priv.elvss_set, aid_dimming_dynamic.elvss_len - 1);
 	memcpy(SEQ_ELVSS, elvss, aid_dimming_dynamic.elvss_cmd_cnt);
 
+
 	SEQ_ELVSS[aid_dimming_dynamic.elvss_len - 1] += dsim_panel_get_elvssoffset(dsim);
 	dsim_info("%s elvss ha3/hf3\n", __func__);
 	memcpy(dsim->priv.tset, &SEQ_ELVSS[1], aid_dimming_dynamic.elvss_len - 1);
 	dsim_panel_set_tset(dsim, 1);
+
 }
 
 static int low_level_set_brightness_for_hmt(struct dsim_device *dsim ,int force)

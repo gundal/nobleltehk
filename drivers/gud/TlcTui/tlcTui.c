@@ -132,9 +132,11 @@ static uint32_t send_cmd_to_user(uint32_t command_id)
 	g_user_rsp.id = TLC_TUI_CMD_NONE;
 	g_user_rsp.return_code = TLC_TUI_ERR_UNKNOWN_CMD;
 
+
 	/* Check that the client (TuiService) is still present before to return
 	* the command. */
 	if (atomic_read(&fileopened)) {
+
 	/* S.LSI : Clean up previous response. */
 	complete_all(&io_comp);
 	INIT_COMPLETION(io_comp);
@@ -156,6 +158,7 @@ static uint32_t send_cmd_to_user(uint32_t command_id)
 		ret = TUI_DCI_ERR_INTERNAL_ERROR;
 		goto end;
 	}
+
 	INIT_COMPLETION(io_comp);
 
 	/* Check id of the cmd processed by ioctl thread (paranoia) */
@@ -178,10 +181,12 @@ static uint32_t send_cmd_to_user(uint32_t command_id)
 		}
 	}
 
+
 end:
 	/* In any case, reset the value of the command, to ensure that commands
 	* sent due to inturrupted wait_for_completion are TLC_TUI_CMD_NONE. */
 	reset_global_command_id();
+
 	return ret;
 }
 
@@ -235,11 +240,13 @@ static void tlc_process_cmd(void)
 
 		/* Start android TUI activity */
 		ret = send_cmd_to_user(TLC_TUI_CMD_START_ACTIVITY);
+
 		if (TUI_DCI_OK != ret){
 //			send_cmd_to_user(TLC_TUI_CMD_STOP_ACTIVITY);
 			pr_info("%s Start Tuiactivity failed : ret = %d\n", __func__, ret);
 			break;
 		}
+
 			/* allocate TUI frame buffer */
 		ret = hal_tui_alloc(dci->nwd_rsp.alloc_buffer,
 				dci->cmd_nwd.payload.alloc_data.alloc_size,
@@ -284,6 +291,7 @@ static void tlc_process_cmd(void)
 		* killed, which imply that the activity is stopped already. */
 		send_cmd_to_user(TLC_TUI_CMD_STOP_ACTIVITY);
 		ret = TUI_DCI_OK;
+
 		break;
 
 	default:

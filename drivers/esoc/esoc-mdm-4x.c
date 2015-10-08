@@ -774,6 +774,7 @@ int mdm_get_modem_status(void)
 
 EXPORT_SYMBOL(mdm_get_modem_status);
 
+
 static void mdm_set_hsic_ready(struct esoc_clink *esoc)
 {
 	struct mdm_ctrl *mdm = get_esoc_clink_data(esoc);

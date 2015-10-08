@@ -1,7 +1,9 @@
 /*
  *  Universal TUN/TAP device driver.
  *  Copyright (C) 1999-2000 Maxim Krasnyansky <max_mk@yahoo.com>
+
  *  Copyright (c) 2015 Samsung Electronics Co., Ltd.
+
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

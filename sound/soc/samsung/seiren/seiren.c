@@ -957,6 +957,7 @@ static ssize_t esa_write(struct file *file, const char *buffer,
 		goto err;
 	}
 
+
 	/* receive stream data from user */
 	if (copy_from_user(ibuf, buffer, size)) {
 		esa_err("%s: failed to copy_from_user\n", __func__);
@@ -1768,6 +1769,7 @@ static ssize_t esa_write(struct file *file, const char *buffer,
 				__func__);
 		goto out;
 	}
+
 
 	if (copy_from_user(si.fx_work_buf, buffer, size)) {
 		esa_err("%s: failed to copy_from_user\n", __func__);

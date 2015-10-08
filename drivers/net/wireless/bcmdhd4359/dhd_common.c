@@ -24,7 +24,9 @@
  *
  * <<Broadcom-WL-IPTag/Open:>>
  *
+
  * $Id: dhd_common.c 569369 2015-07-08 04:01:49Z $
+
  */
 #include <typedefs.h>
 #include <osl.h>

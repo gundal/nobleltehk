@@ -1026,6 +1026,7 @@ static signed char HF3_HMTctbl99nit[30] = {0, 0, 0, 0, 0, 0,0, 6, -12, -3, 1, -4
 static signed char HF3_HMTctbl105nit[30] = {0, 0, 0, 0, 0, 0,-1, 6, -12, -5, 1, -3, -1, 0, -1, 0, 0, 0, -3, 0, -2, 0, 0, -1, -1, 0, -2, 6, -2, 8};
 
 
+
 static signed char HF3_HMTaid8001[3] = {0xB1, 0x20, 0x03};
 static signed char HF3_HMTaid6999[3] = {0xB1, 0X30, 0x05};
 
@@ -1035,6 +1036,7 @@ static unsigned char HF3_HMTelv[3] = {
 static unsigned char HF3_HMTelvCaps[3] = {
         0xB5, 0xBC, 0x0A
 };
+
 
 
 static signed char HF3_A3_HMTrtbl10nit[10] = {0, 2, 4, 3, 3, 2, 1, -1, 1, 0};
@@ -1112,6 +1114,7 @@ static signed char HF3_A3_HMTctbl87nit[30] = {0, 0, 0, 0, 0, 0,-1, 1, -2, 0, 0, 
 static signed char HF3_A3_HMTctbl93nit[30] = {0, 0, 0, 0, 0, 0,-1, 1, -2, 0, 1, -2, -2, 0, -2, 0, 0, 1, -2, 1, -2, -2, 0, -1, 0, 0, 0, 6, -1, 8};
 static signed char HF3_A3_HMTctbl99nit[30] = {0, 0, 0, 0, 0, 0,-2, 1, -3, -1, 0, -2, 0, 0, -2, 0, 0, 0, -3, 1, -2, -1, 0, -2, 0, 0, 0, 7, -1, 8};
 static signed char HF3_A3_HMTctbl105nit[30] = {0, 0, 0, 0, 0, 0,-3, 1, -3, 0, 0, -2, -1, 0, -1, 0, 0, 1, -3, 1, -2, -1, 0, -2, 0, 0, 0, 7, -1, 8};
+
 
 #endif
 

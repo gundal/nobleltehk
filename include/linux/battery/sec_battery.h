@@ -242,6 +242,7 @@ struct sec_battery_info {
 	int cc_cv_mode;
 	bool full_mode;
 	bool cs100_status;
+
 #endif
 #if defined(CONFIG_CALC_TIME_TO_FULL)
 	int timetofull;

@@ -318,6 +318,7 @@ static unsigned char GRAYSCALE_NEGATIVE_1[] = {
 	0x00, //ascr_skin_Wr
 	0x00, //ascr_skin_Wg
 	0x00, //ascr_skin_Wb
+
 	0x4c, //ascr_Cr
 	0xb3, //ascr_Rr
 	0x4c, //ascr_Cg

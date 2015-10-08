@@ -1248,6 +1248,7 @@ static int octa_a3_read_dim_data(struct panel_private *panel)
 #endif
 	struct SmtDimInfo *diminfo = (struct SmtDimInfo *)panel->dim_info;
 
+
 	int (*parse_fn[6])(struct panel_private*, char *) = {
 		parse_basic_data,
 		parse_ref_shift,
@@ -1760,6 +1761,7 @@ struct SmtDimInfo hmt_dimming_info_HF3[HMT_MAX_BR_INFO] = {
 	{.br = 64, .refBr = 218, .cGma = gma2p15, .rTbl = HF3_HMTrtbl64nit, .cTbl = HF3_HMTctbl64nit, .aid = HF3_HMTaid8001, .elvCaps = HF3_HMTelvCaps, .elv = HF3_HMTelv},
 	{.br = 68, .refBr = 230, .cGma = gma2p15, .rTbl = HF3_HMTrtbl68nit, .cTbl = HF3_HMTctbl68nit, .aid = HF3_HMTaid8001, .elvCaps = HF3_HMTelvCaps, .elv = HF3_HMTelv},
 	{.br = 72, .refBr = 241, .cGma = gma2p15, .rTbl = HF3_HMTrtbl72nit, .cTbl = HF3_HMTctbl72nit, .aid = HF3_HMTaid8001, .elvCaps = HF3_HMTelvCaps, .elv = HF3_HMTelv},
+
 	{.br = 77, .refBr = 186, .cGma = gma2p15, .rTbl = HF3_HMTrtbl77nit, .cTbl = HF3_HMTctbl77nit, .aid = HF3_HMTaid6999, .elvCaps = HF3_HMTelvCaps, .elv = HF3_HMTelv},
 	{.br = 82, .refBr = 199, .cGma = gma2p15, .rTbl = HF3_HMTrtbl82nit, .cTbl = HF3_HMTctbl82nit, .aid = HF3_HMTaid6999, .elvCaps = HF3_HMTelvCaps, .elv = HF3_HMTelv},
 	{.br = 87, .refBr = 209, .cGma = gma2p15, .rTbl = HF3_HMTrtbl87nit, .cTbl = HF3_HMTctbl87nit, .aid = HF3_HMTaid6999, .elvCaps = HF3_HMTelvCaps, .elv = HF3_HMTelv},
@@ -1819,6 +1821,7 @@ static int hmt_init_dimming(struct dsim_device *dsim, u8 * mtp)
 	struct SmtDimInfo *diminfo = NULL;
 	unsigned char panel_line = panel->id[0] & 0xF0;
 
+
 	if( dimming == NULL ) {
 		dimming = (struct dim_data *) kmalloc(sizeof(struct dim_data), GFP_KERNEL);
 		if (!dimming) {
@@ -1827,6 +1830,7 @@ static int hmt_init_dimming(struct dsim_device *dsim, u8 * mtp)
 			goto error;
 		}
 	}
+
 	switch (dynamic_lcd_type) {
 	case LCD_TYPE_S6E3HA3_WQHD:
 		dsim_info("%s init HMT dimming info for HA3 panel\n", __func__);
@@ -2798,6 +2802,7 @@ static int s6e3ha3_wqhd_init(struct dsim_device *dsim)
 #ifdef CONFIG_LCD_HMT
 		if(dsim->priv.hmt_on != HMT_ON)
 #endif
+
 	msleep(120);
 
 #ifdef CONFIG_ALWAYS_RELOAD_MTP_FACTORY_BUILD
@@ -3358,6 +3363,7 @@ static int s6e3hf3_wqhd_init(struct dsim_device *dsim)
 		dsim_err("%s : fail to write CMD : S6E3HF3_SEQ_MIC\n", __func__);
 		goto init_exit;
 	}
+
 #ifdef CONFIG_LCD_HMT
 		if(dsim->priv.hmt_on != HMT_ON)
 #endif

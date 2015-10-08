@@ -1,4 +1,5 @@
 /* Copyright (c) 2015 Samsung Electronics Co., Ltd. */
+
 /*
  * INET		An implementation of the TCP/IP protocol suite for the LINUX
  *		operating system.  INET is implemented using the  BSD Socket
@@ -46,6 +47,7 @@
  *    Add codes to share UID/PID information
  *
  */
+
 
 #ifndef _SOCK_H
 #define _SOCK_H

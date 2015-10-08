@@ -2222,6 +2222,7 @@ static void sec_bat_do_fullcharged(
 		if (battery->cable_type == POWER_SUPPLY_TYPE_WIRELESS ||
 			battery->cable_type == POWER_SUPPLY_TYPE_HV_WIRELESS ||
 			battery->cable_type == POWER_SUPPLY_TYPE_PMA_WIRELESS) {
+
 			if(battery->capacity >= 100) {
 				battery->cs100_status = false;
 				value.intval = POWER_SUPPLY_STATUS_FULL;
@@ -2240,6 +2241,7 @@ static void sec_bat_do_fullcharged(
 		if (battery->cable_type == POWER_SUPPLY_TYPE_WIRELESS ||
 			battery->cable_type == POWER_SUPPLY_TYPE_HV_WIRELESS ||
 			battery->cable_type == POWER_SUPPLY_TYPE_PMA_WIRELESS) {
+
 			if(battery->capacity >= 100) {
 				battery->cs100_status = false;
 				value.intval = POWER_SUPPLY_STATUS_FULL;
@@ -2454,6 +2456,7 @@ static void sec_bat_get_battery_info(
 		else
 			queue_delayed_work_on(0, battery->monitor_wqueue, &battery->siop_work, 0);
 	}
+
 
 #if defined(CONFIG_WIRELESS_CHARGER_INBATTERY) || defined(CONFIG_WIRELESS_CHARGER_HIGH_VOLTAGE)
 	if ( battery->wc_status != SEC_WIRELESS_PAD_NONE &&
@@ -4595,6 +4598,7 @@ ssize_t sec_bat_store_attrs(
 			union power_supply_propval value;
 			dev_info(battery->dev,
 					"%s: HMT_TA_CHARGE(%d)\n", __func__, x);
+
 			psy_do_property(battery->pdata->charger_name, get,
 					POWER_SUPPLY_PROP_CHARGE_OTG_CONTROL, value);
 			if (value.intval) {
@@ -4611,6 +4615,7 @@ ssize_t sec_bat_store_attrs(
 					battery->wire_status = POWER_SUPPLY_TYPE_HMT_CHARGE;
 					wake_lock(&battery->cable_wake_lock);
 					queue_delayed_work_on(0, battery->monitor_wqueue, &battery->cable_work, 0);
+
 				} else {
 					value.intval = false;
 					psy_do_property(battery->pdata->charger_name, set,
@@ -4618,6 +4623,7 @@ ssize_t sec_bat_store_attrs(
 							value);
 					dev_info(battery->dev,
 							"%s: changed to OTG cable detached\n", __func__);
+
 					battery->wire_status = POWER_SUPPLY_TYPE_HMT_CONNECTED;
 					wake_lock(&battery->cable_wake_lock);
 					queue_delayed_work_on(0, battery->monitor_wqueue, &battery->cable_work, 0);

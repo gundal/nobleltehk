@@ -1329,6 +1329,7 @@ static void bprm_fill_uid(struct linux_binprm *bprm)
  */
 int prepare_binprm(struct linux_binprm *bprm)
 {
+
 	int retval;
 
 	if (bprm->file->f_op == NULL)

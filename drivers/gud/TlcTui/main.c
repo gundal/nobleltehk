@@ -81,11 +81,13 @@ static long tui_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 		pr_info("TUI_IO_WAITCMD\n");
 
 		ret = tlc_wait_cmd(&cmd_id);
+
 		if (ret) {
 			pr_debug("ERROR %s:%d tlc_wait_cmd returned (0x%08X)\n",
 				__func__, __LINE__, ret);
 			return ret;
 		}
+
 
 		/* Write command id to user */
 		pr_debug("IOCTL: sending command %d to user.\n", cmd_id);
@@ -123,6 +125,7 @@ static long tui_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
 
 	return ret;
 }
+
 
 atomic_t fileopened;
 static int tui_open(struct inode *inode, struct file *file)

@@ -1,4 +1,5 @@
 /* Copyright (c) 2015 Samsung Electronics Co., Ltd. */
+
 /*
  *	Definitions for the 'struct sk_buff' memory handlers.
  *
@@ -19,6 +20,7 @@
  *    Add codes to share UID/PID information
  *
  */
+
 
 #ifndef _LINUX_SKBUFF_H
 #define _LINUX_SKBUFF_H
