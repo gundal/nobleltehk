@@ -1,0 +1,79 @@
+case $1 in
+screendata)
+  P=/sys/class/mdnie/mdnie
+  echo "#!/system/bin/sh\necho 1 > $P/override\necho $(cat $P/copy_mode) > $P/copy_mode\necho $(cat $P/black) > $P/black\necho $(cat $P/white) > $P/white\necho $(cat $P/red) > $P/red\necho $(cat $P/green) > $P/green\necho $(cat $P/blue) > $P/blue\necho $(cat $P/cyan) > $P/cyan\necho $(cat $P/magenta) > $P/magenta\necho $(cat $P/yellow) > $P/yellow\necho $(cat $P/gamma_curve) > $P/gamma_curve\necho $(cat $P/sharpen) > $P/sharpen\n" > /sdcard/screen
+  echo File saved at /sdcard/screen
+  ;;
+vread)
+  bin=`cat /sys/devices/system/soc/soc0/soc_pvs`
+  if [ $bin == 0 ]
+  then
+  pvs=1075
+  elif [ $bin == 1 ]
+  then
+  pvs=1050
+  elif [ $bin == 2 ]
+  then
+  pvs=1025
+  elif [ $bin == 3 ]
+  then
+  pvs=1000
+  elif [ $bin == 4 ]
+  then
+  pvs=975
+  elif [ $bin == 5 ]
+  then
+  pvs=950
+  elif [ $bin == 6 ]
+  then
+  pvs=925
+  fi
+  while read freq volt
+  do
+  if [ ${freq//[mhz:]/} == 2265 ]
+  then
+  val=$((${volt//[ mV]/} - $pvs))
+  fi
+  done < /sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table
+  echo $val
+  ;;
+
+developer)
+  echo `sed -n '1p' /res/synapse/actions/info`
+  ;;
+kerver)
+  echo `sed -n '2p' /res/synapse/actions/info`
+  ;;
+kername)
+  echo `sed -n '3p' /res/synapse/actions/info`
+  ;;
+androidver)
+  echo `getprop ro.build.version.release`
+  ;;
+firmware)
+  echo `getprop ro.build.PDA`
+  ;; 
+baseband)
+  echo `getprop gsm.version.baseband`
+  ;;
+bootloader)
+  echo `getprop ro.bootloader`
+  ;;
+date)
+  echo `getprop ro.build.date`
+  ;;
+rom)
+  echo `getprop ro.build.display.id`
+  ;;
+serial)
+  P=/efs/FactoryApp/serial_no
+  if [ -f $P ]; then
+    echo `cat $P`
+  else
+    echo `getprop ro.boot.serialno`
+  fi
+  ;;
+susp)
+  echo `cat /sys/kernel/power_suspend/power_suspend_version`
+  ;;
+esac

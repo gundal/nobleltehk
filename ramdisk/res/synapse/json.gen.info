@@ -1,0 +1,97 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:"System Info",
+    elements:[
+	{ SPane:{
+		title:"Kernel Developer"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init developer"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Source Code",
+		description:"<a href='https://github.com/gundal/nobleltehk.git'>github repo</a>"
+	}},
+	{ SPane:{
+		title:"Kernel"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init kername"
+	}},
+	{ SDescription:{
+		description:"exynos7420-nobleltehk Kernel"
+	}},
+	{ SPane:{
+		title:"Version"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init kerver"
+	}},
+	{ SDescription:{
+		description:"current release version"
+	}},
+	{ SPane:{
+		title:"Android"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init androidver"
+	}},
+	{ SPane:{
+		title:"Rom"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init rom"
+	}},
+	{ SPane:{
+		title:"Built"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init date"
+	}},
+	{ SPane:{
+		title:"Firmware"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init firmware"
+	}},
+	{ SPane:{
+		title:"Bootloader"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init bootloader"
+	}},
+	{ SPane:{
+		title:"Baseband"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init baseband"
+	}},
+	{ SPane:{
+		title:"Serial"
+	}},
+	{ SLiveLabel:{
+		refresh:9999,
+		action:"init serial"
+	}},
+	{ SLiveLabel:{
+		title:"Battery info",
+		refresh:5000,
+		action:"display battinfo"	
+	}},
+    ]
+}
+CTAG
