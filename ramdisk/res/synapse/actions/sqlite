@@ -1,11 +1,11 @@
-HRT=/sdcard/GuNDaL;
+HRT=/data/media/0/GuNDaL;
 BB=/sbin/busybox;
 if [ -f "/system/xbin/sqlite3" ]; then SQL3=/system/xbin/sqlite3; else SQL3=/sbin/sqlite3; fi;
 
-SYNAPSE_SD_DIR=/sdcard/Synapse;
-SYNAPSE_CONFIG_DIR=$SYNAPSE_SD_DIR/saved_configs;
+SYNAPSE_SD_DIR=/data/media/0/GuNDaL/SynapseBackup;
+SYNAPSE_CONFIG_DIR=$SYNAPSE_SD_DIR/configs;
 SYNAPSE_DATA=/data/data/com.af.synapse/databases;
-DISABLED_SETTINGS="'buildprop net.hostname', 'buildprop service.adb.tcp.port', 'devtools selinux', 'generic /data/.hackerkernel/profile_backup'";
+DISABLED_SETTINGS="'buildprop net.hostname', 'buildprop service.adb.tcp.port', 'devtools selinux', 'generic /data/media/0/GuNDaL/profile_backup'";
 DISABLED_ACTIONS="AND key NOT LIKE 'gamma%' AND key NOT LIKE 'gamma_cont%' AND key NOT LIKE 'gamma_val%' AND key NOT LIKE 'gamma_sat%' AND key NOT LIKE 'restorebackup%' AND key NOT LIKE 'output%' AND key NOT LIKE 'output_head%' AND key NOT LIKE 'output_pwamp%'";
 
 case "$1" in

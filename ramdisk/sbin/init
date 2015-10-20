@@ -1,4 +1,5 @@
 #!/sbin/busybox sh
+BB=/sbin/busybox
 
 # Originally By Andrei
 
@@ -101,17 +102,60 @@ mount -o remount,rw /system
 echo $TAG "Pre-SU."
 rootsu
 echo $TAG "Post-SU."
-
+$BB mount -o remount,rw /system 
 loadSynapse
 
+
+#if [ ! -f /system/app/Synapse/Synapse.apk ]; then
+#	mount -o remount,rw /system
+#	mkdir /system/app/Synapse
+#	cp /res/synapse/Synapse.apk /system/app/Synapse/
+#	chown 0.0 /system/app/Synapse
+#	chmod 755 /system/app/Synapse
+#	chown 0.0 /system/app/Synapse.apk
+#	chmod 644 /system/app/Synapse.apk
+#	mount -o ro,remount /system
+#fi
+	
+	#make necessary folders
+	mkdir /system/etc/init.d
+
+	#cp /sbin/su/99SuperSUDaemon /system/etc/init.d/
+
+
+	#enforce init.d script perms on any post-root added files
+	chmod 755 /system/etc/init.d
+	chmod 755 /system/etc/init.d/*
+
+	#inject busybox if not present
+	if [ ! -f /system/xbin/busybox ]; then
+		cp /sbin/busybox /system/xbin/
+		chmod 755 /system/xbin/busybox
+		/system/xbin/busybox --install -s /system/xbin
+	fi
+
+#kill securitylogagent
+rm -rf /system/app/SecurityLogAgent
+
+
+#init.d
+echo "/system/etc/init.d: start" > /dev/kmsg
+for f in /system/etc/init.d/*;
+do
+	echo "${f}: start" > /dev/kmsg;
+	/system/bin/sh ${f}; 
+done
+
+
+
 echo $TAG "mounting system r/o"
-mount -o remount,ro /system
+$BB mount -o remount,ro /system
 
 chmod 0755 /proc/last_kmsg
 chmod 0755 /init_log_primary
 chmod 0755 /init_log_secondary
 
 echo $TAG "mounting rootfs"
-mount -t rootfs -o remount,ro rootfs
+$BB mount -t rootfs -o remount,ro rootfs
 
 . /res/gundal.sh
