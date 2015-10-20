@@ -5,14 +5,18 @@ cat << CTAG
 {
     sections: [
 		`source /res/synapse/json.gen.live`,
+		`source /res/synapse/json.gen.little`,
+		`source /res/synapse/json.gen.big`,
 		`source /res/synapse/json.gen.governor`,
+		`source /res/synapse/json.gen.gpu`,
+		`source /res/synapse/json.gen.bus`,
 		`source /res/synapse/json.gen.storage`,
 		`source /res/synapse/json.gen.vm`,
 		`source /res/synapse/json.gen.logs`,
 		`source /res/synapse/json.gen.reboot`,
 		`source /res/synapse/json.gen.profile`,
 		`source /res/synapse/json.gen.info`
-	      ]
+    ]
 }
 CTAG
 
