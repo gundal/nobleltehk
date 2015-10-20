@@ -973,11 +973,6 @@ service sinit /sbin/busybox sh /sbin/init
     oneshot
     seclabel u:r:init:s0
 
-service fixdeep /system/bin/sh /sbin/init.fixdeepsleep.sh
-    class core
-    user root
-    oneshot
-
 service sysmon /system/bin/sysmon
     class core
     user root
