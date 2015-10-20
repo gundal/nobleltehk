@@ -5,7 +5,7 @@ export RAMFS_SOURCE=`readlink -f ~/android/nobleltehk/ramdisk`
 echo "kernerldir = $KERNELDIR"
 echo "ramfs_source = $RAMFS_SOURCE"
 
-RAMFS_TMP="~/android/gundal/tmp/ramdisk"
+RAMFS_TMP=`readlink -f ~/android/gundal/tmp/ramdisk`
 
 echo "ramfs_tmp = $RAMFS_TMP"
 
