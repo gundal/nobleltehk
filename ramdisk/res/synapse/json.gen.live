@@ -1,0 +1,82 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:CPU Stats,
+    elements:[
+	{ SPane:{
+		title:"CPU Activity",
+		description:"Live CPU status."
+	}},
+	{ SLiveLabel:{
+	title:"Current A53 CPU Frequency",
+		refresh:1000,
+		 action:"echo \$(( \$(cat /sys/devices/system/cpu/cpu0/online) + \$(cat /sys/devices/system/cpu/cpu1/online) + \$(cat /sys/devices/system/cpu/cpu2/online) + \$(cat /sys/devices/system/cpu/cpu3/online) )) core\\\\(s\\\\)"
+        }},
+{ SLiveLabel:{
+		refresh:1000,
+		action:"display cpufreq"
+	}},
+
+	{ SLiveLabel:{
+	title:"Current A57 CPU Frequency",
+		refresh:1000,
+	        action:"echo \$(( \$(cat /sys/devices/system/cpu/cpu4/online) + \$(cat /sys/devices/system/cpu/cpu5/online) + \$(cat /sys/devices/system/cpu/cpu6/online) + \$(cat /sys/devices/system/cpu/cpu7/online) )) core\\\\(s\\\\)"
+        }},
+{ SLiveLabel:{
+		refresh:1000,
+		action:"display cpufreq2"
+	}},
+
+	{ SPane:{
+		title:"Uptime"
+
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveUpTime"
+	}},
+
+	{ SPane:{
+		title:"Time in States A53"
+
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveTime 0 9"
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveTime 10 19"
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveTime 20 29"
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveTime 30 39"
+	}},
+
+	{ SPane:{
+		title:"Time in States A57"
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveTime2 0 9"
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveTime2 10 19"
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveTime2 20 29"
+	}},
+	{ SLiveLabel:{
+		refresh:5000,
+		action:"display LiveTime2 30 39"
+	}},
+	]
+}
+CTAG
