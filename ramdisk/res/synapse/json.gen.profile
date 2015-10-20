@@ -21,7 +21,7 @@ cat << CTAG
 					{
 						on:APPLY,
 						do:[ REFRESH, APPLY ],
-						to:"generic /sdcard/GuNDaL/profile_backup"
+						to:"generic /data/media/0/GuNDaL/profile_backup"
 					}
 				]
 			}},
@@ -67,7 +67,7 @@ cat << CTAG
 					{
 						on:APPLY,
 						do:[ REFRESH, APPLY ],
-						to:"generic /sdcard/GuNDaL/profile_backup"
+						to:"generic /data/media/0/GuNDaL/profile_backup"
 					}
 				]
 			}},
@@ -102,7 +102,7 @@ cat << CTAG
 			{ SGeneric:{
 				title:"Profile/Config Name",
 				default:"None",
-				action:"generic /sdcard/GuNDaL/profile_backup",
+				action:"generic /data/media/0/GuNDaL/profile_backup",
 			}},
 			{ SDescription:{
 				description:"First set a name above and apply. After this you can press the Backup Current Profile or Export Current Config button below."
@@ -114,7 +114,7 @@ cat << CTAG
 					{
 						on:APPLY,
 						do:[ REFRESH, APPLY ],
-						to:"generic sdcard/GuNDaL/profile_backup"
+						to:"generic /data/media/0/GuNDaL/profile_backup"
 					}
 				]
 			}},
@@ -125,7 +125,7 @@ cat << CTAG
 					{
 						on:APPLY,
 						do:[ REFRESH, APPLY ],
-						to:"generic /sdcard/GuNDaL/profile_backup"
+						to:"generic /data/media/0/GuNDaL/profile_backup"
 					}
 				]
 			}},

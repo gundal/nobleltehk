@@ -14,7 +14,7 @@ ro.secure=1
 ro.allow.mock.location=1
 ro.debuggable=1
 ro.adb.secure=1
-persist.sys.usb.config=mtp,adb
+persist.sys.usb.config=mtp
 ro.zygote=zygote64_32
 ro.smps.gain.spk=0.8
 dalvik.vm.dex2oat-Xms=64m
@@ -29,3 +29,4 @@ ro.config.fha_enable=true
 persist.radio.apm_sim_not_pwdn=1
 telephony.lteOnCdmaDevice=1
 persist.eons.enabled=true
+
