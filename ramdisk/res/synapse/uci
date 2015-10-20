@@ -4,7 +4,7 @@ exec 2<&-
 exec 2<>/init_log_synapse
 
 CONFIG_JSON=/res/synapse/config.json
-ACTION_SCRIPTS=/res/synapse/actions/
+ACTION_SCRIPTS=/res/synapse/actions
 
 if [ ! -f $CONFIG_JSON ]; then
 	source /res/synapse/json.generate > $CONFIG_JSON

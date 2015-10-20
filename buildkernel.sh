@@ -13,7 +13,7 @@ if [ "${1}" = "skip" ] ; then
 	echo "Skipping Compilation"
 else
 	echo "Compiling Kernel"
-	cp arch/arm64/configs/exynos7420-gundal_defconfig .config
+	cp arch/arm64/configs/exynos7420-nobleltehk_defconfig .config
 	make "$@" -j5 || exit 1
 fi
 
