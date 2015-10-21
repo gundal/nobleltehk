@@ -1,4 +1,4 @@
-/*
+/*GuNDaL
  * Copyright (c) 2013 Samsung Electronics Co., Ltd.
  *		http://www.samsung.com
  *
@@ -78,6 +78,15 @@
 #define CL_VOLT_STEP		6250
 #else
 #error "Please define core voltage ranges for current SoC."
+#endif
+
+#ifdef CONFIG_SOC_EXYNOS7420
+#define CL0_MIN_FREQ		400000
+#define CL0_MAX_FREQ		1500000
+#define CL1_MIN_FREQ		800000
+#define CL1_MAX_FREQ		2100000
+#else
+#error "Please define core frequency ranges for current SoC."
 #endif
 
 #define VOLT_RANGE_STEP		25000
@@ -1131,6 +1140,7 @@ static struct notifier_block exynos_tmu_nb = {
 static int exynos_cpufreq_cpu_init(struct cpufreq_policy *policy)
 {
 	unsigned int cur = get_cur_cluster(policy->cpu);
+	int ret;
 
 	pr_debug("%s: cpu[%d]\n", __func__, policy->cpu);
 
@@ -1148,8 +1158,15 @@ static int exynos_cpufreq_cpu_init(struct cpufreq_policy *policy)
 		cpumask_copy(policy->cpus, &cluster_cpus[CL_ZERO]);
 		cpumask_copy(policy->related_cpus, &cluster_cpus[CL_ZERO]);
 	}
+	
+	ret = cpufreq_frequency_table_cpuinfo(policy, exynos_info[cur]->freq_table);
+	
+	if (!ret) {
+		policy->min = cur == CL_ONE ? CL1_MIN_FREQ : CL0_MIN_FREQ;
+		policy->max = cur == CL_ONE ? CL1_MAX_FREQ : CL0_MAX_FREQ;
+	}
 
-	return cpufreq_frequency_table_cpuinfo(policy, exynos_info[cur]->freq_table);
+	return ret;
 }
 
 static struct cpufreq_driver exynos_driver = {
@@ -1434,6 +1451,34 @@ inline ssize_t store_core_freq(const char *buf, size_t count,
 	return count;
 }
 
+inline ssize_t set_boot_low_freq(const char *buf, size_t count)
+{
+	int input;
+	unsigned int set_freq = 0;
+
+	if (!sscanf(buf, "%8d", &input))
+		return -EINVAL;
+
+	if (exynos_info[CL_ONE]->low_boot_cpu_max_qos)
+		set_freq = exynos_info[CL_ONE]->low_boot_cpu_max_qos;
+	else
+		set_freq = PM_QOS_DEFAULT_VALUE;
+
+	if (input) {
+		/* only big core limit, default 1800s */
+		pr_info("%s: low boot freq[%d], cl[%d]\n", __func__,
+					set_freq, CL_ONE);
+		pm_qos_update_request_timeout(&boot_max_qos[CL_ONE],
+					set_freq, 1800 * USEC_PER_SEC);
+	} else {
+		pr_info("%s: release low boot freq\n", __func__);
+		pm_qos_update_request(&boot_max_qos[CL_ONE],
+					PM_QOS_DEFAULT_VALUE);
+	}
+
+	return count;
+}
+
 static size_t get_freq_table_size(struct cpufreq_frequency_table *freq_table)
 {
 	size_t tbl_sz = 0;
@@ -1603,6 +1648,12 @@ static ssize_t store_cluster0_max_freq(struct kobject *kobj, struct attribute *a
 	return store_core_freq(buf, count, CL_ZERO, true);
 }
 
+static ssize_t store_boot_low_freq(struct kobject *kobj, struct attribute *attr,
+					const char *buf, size_t count)
+{
+	return set_boot_low_freq(buf, count);
+}
+
 static ssize_t show_cluster0_volt_table(struct kobject *kobj,
 				struct attribute *attr, char *buf)
 {
@@ -1623,6 +1674,7 @@ define_one_global_ro(cluster0_freq_table);
 define_one_global_rw(cluster0_min_freq);
 define_one_global_rw(cluster0_max_freq);
 define_one_global_rw(cluster0_volt_table);
+define_one_global_rw(boot_low_freq);
 
 static struct attribute *mp_attributes[] = {
 	&cluster1_freq_table.attr,
@@ -1633,6 +1685,7 @@ static struct attribute *mp_attributes[] = {
 	&cluster0_min_freq.attr,
 	&cluster0_max_freq.attr,
 	&cluster0_volt_table.attr,
+	&boot_low_freq.attr,
 	NULL
 };
 
