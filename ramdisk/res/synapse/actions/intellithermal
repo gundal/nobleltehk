@@ -1,4 +1,6 @@
-BB=/sbin/busybox;
+if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
+if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
+
 
 if [ "$1" == "freq" ]; then
 	[ -f "/sys/module/msm_thermal/parameters/freq_control_mask" ] && FP=/sys/module/msm_thermal/parameters/freq_control_mask;
