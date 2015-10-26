@@ -2,41 +2,62 @@
 
 cat << CTAG
 {
-    name:Reboot,
+    name:Reboot Menu,
     elements:[
 	{ STitleBar:{
 		title:"Reboot Options"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height:1
 	}},
 	{ SButton:{
 		label:"Reboot Device",
 		action:"devtools reboot"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height:1
 	}},
 	{ SButton:{
 		label:"Recovery Mode",
 		action:"devtools reboot recovery"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height:1
 	}},
 	{ SButton:{
 		label:"Download Mode",
 		action:"devtools reboot download"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height:1
 	}},
 	{ SButton:{
 		label:"Power Off",
 		action:"devtools reboot -p"
 	}},
-	{ SDescription:{
-		description:""
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"Synapse Actions",
+		description:"select Clear Synapse Data to wipe Synapse DB and reset alll params to default."
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:"Clear Synapse Data",
+		action:"devtools cleardata"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:"Restart Synapse",
+		action:"devtools restart"
+	}},
+	{ SSpacer:{
+		height:1
 	}},
     ]
 }

@@ -1,8 +1,14 @@
-HRT=/data/media/0/GuNDaL;
-BB=/sbin/busybox;
+BuD=/data/media/0/GuNDaL;
+if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
+if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
+
+if [ ! -f /system/bin/sqlite3 ]; then
+	echo "Please install sqlite3 to /system/bin and try again."
+	exit;
+fi
 
 if [ -d /data/data/com.af.synapse ]; then
-  SYNAPSE_SD_DIR=$HRT/SynapseBackup;
+  SYNAPSE_SD_DIR=$BuD/SynapseBackup;
   SYNAPSE_BOOT_DIR=$SYNAPSE_SD_DIR/kernel_versions;
   SYNAPSE_PROFILE_DIR=$SYNAPSE_SD_DIR/profiles;
   SYNAPSE_CONFIG_DIR=$SYNAPSE_SD_DIR/configs;
@@ -50,14 +56,14 @@ case "$1" in
 	;;
 
 	keepboot)
-		PROFILE_BAK=`$BB cat $HRT/profile_backup`;
+		PROFILE_BAK=`$BB cat $BuD/profile_backup`;
 		PROFILE_BAK=`$BB echo ${PROFILE_BAK// /_}`;
 	
 		if [ "$PROFILE_BAK" == "None" ]; then
 			$BB echo "Enter a kernel name first and then apply.";
 		else
 			$BB dd if="$2" of="$SYNAPSE_BOOT_DIR/$PROFILE_BAK.img" 2> /dev/null;
-			$BB echo "None" > $HRT/profile_backup;
+			$BB echo "None" > $BuD/profile_backup;
 			$BB echo "$PROFILE_BAK.img created. Press the Restart Synapse button below to see updated list.";
 		fi;
 	;;
@@ -116,14 +122,14 @@ case "$1" in
 	;;
 
 	keepprofile)
-		PROFILE_BAK=`$BB cat $HRT/profile_backup`;
+		PROFILE_BAK=`$BB cat $BuD/profile_backup`;
 		PROFILE_BAK=`$BB echo ${PROFILE_BAK// /_}`;
 	
 		if [ "$PROFILE_BAK" == "None" ]; then
 			$BB echo "Enter a profile name first and then apply.";
 		else
 			cd $SYNAPSE_DATA;
-			$BB echo "None" > $HRT/profile_backup;
+			$BB echo "None" > $BuD/profile_backup;
 			$BB tar cvf "$SYNAPSE_PROFILE_DIR/$PROFILE_BAK.tar" *;
 			$BB echo "$PROFILE_BAK.tar created. Press the Restart Synapse button below to see updated list.";
 		fi;
