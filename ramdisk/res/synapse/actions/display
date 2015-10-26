@@ -195,6 +195,14 @@ LiveUnUsed)
 battinfo)
 	echo Technology: $(cat /sys/class/power_supply/battery/technology)@nHealth: $(cat /sys/class/power_supply/battery/health)@nStatus: $(cat /sys/class/power_supply/battery/status)@nCharge Level: $(cat /sys/class/power_supply/battery/capacity)%
 	;;
-
-
+selinux_status)
+  SELINUX_STATUS="$(expr `cat /sys/fs/selinux/enforce`)"
+	if [ SELINUX_STATUS -eq "0" ]; then
+                echo SELinux = PERMISSIVE
+	else
+                echo SELinux = ENFORCING
+	fi
+  ;;
 esac
+
+

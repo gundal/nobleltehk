@@ -43,7 +43,7 @@ cp_perm() {
 rootsu() {
 	echo $TAG "Checking SU"
 	
-	#if [ ! -f /system/xbin/su ]; then
+	if [ ! -f /system/xbin/su ]; then
 		echo $TAG "Injecting SU"
 		
 		set_perm 0 0 0777 /system/bin/.ext
@@ -67,9 +67,9 @@ rootsu() {
 		/system/xbin/su --install
 		
 		echo $TAG "Finished SU injection"
-	#else
-	#	echo $TAG "SU is already available"
-	#fi	
+	else
+		echo $TAG "SU is already available"
+	fi	
 	
 }
 echo $TAG "mounting system r/w"
