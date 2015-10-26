@@ -8,17 +8,6 @@ cat << CTAG
 	description:" "
 	}},
 	{ SPane:{
-		title:"Synapse Data",
-		description:" If you have some issues with Synapse just clear data. This will fix some issues."
-	}},
-	{ SDescription:{
-		description:" "
-	}},
-	{ SButton:{
-		label:"Clear Synapse Data",
-		action:"devtools cleardata"
-	}},
-	{ SPane:{
 		title:"Log Creation"
 	}},
 	{ SDescription:{
