@@ -36,8 +36,8 @@ rm -rf $RAMFS_TMP/tmp/*
 
 echo "packing ramdisk"
 cd $RAMFS_TMP
-find . | fakeroot cpio -H newc -o | lzop -9 > $RAMFS_TMP.cpio.lzo
-ls -lh $RAMFS_TMP.cpio.lzo
+find . | fakeroot cpio -H newc -o | gzip -9 > $RAMFS_TMP.cpio.gz
+ls -lh $RAMFS_TMP.cpio.gz
 cd $KERNELDIR
 
 echo "Making new boot image"
