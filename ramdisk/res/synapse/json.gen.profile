@@ -1,5 +1,7 @@
-#!/sbin/sh
+#!/system/bin/sh
 
+if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
+if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
 cat << CTAG
 {
     name:Backup Config,

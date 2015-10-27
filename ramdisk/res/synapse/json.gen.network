@@ -1,0 +1,95 @@
+#!/system/bin/sh
+
+if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
+if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
+cat << CTAG
+{
+    name:Network,
+    elements:[
+    	{ SPane:{
+		title:"TCP Congestion Control",
+		description:" Select your preferred WIFI TCP algorithm. Regulates upload and download affecting throughput in various ways. Default is Westwood+."
+    	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		default:`cat proc/sys/net/ipv4/tcp_congestion_control`,
+		action:"generic proc/sys/net/ipv4/tcp_congestion_control",
+		values:[`while read values; do busybox printf "%s, \n" $values; done < proc/sys/net/ipv4/tcp_available_congestion_control`]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ STitleBar:{
+		title:"Screen mirroring / AllShare Cast fix"
+	}},
+	{ SDescription:{
+		description:" Possible screen mirroring / AllShare Cast fix for rooted devices, works for some. Turn OFF WIFI first. Default is Enabled."
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		default:`echo $(/res/synapse/actions/mirror mirror_fix)`,
+		action:"mirror mirror_fix",
+		values:[Disabled, Enabled,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ STitleBar:{
+		title:"Clean WIFI Lease"
+	}},
+	{ SDescription:{
+		description:" Clean WIFI DHCP IP Lease. Push the button to activate!"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SButton:{
+		label:"Clean WIFI Lease",
+		action:"devtools fix_wifi"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"TCP/IP Network Security Tweak",
+		description:" Protect against SYN & DoS attack etc. Default is Disabled."
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		default:`echo $(/res/synapse/actions/network tcp_security)`,
+		action:"network tcp_security",
+		values:[Disabled, Enabled,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SPane:{
+		title:"3G DNS Tweaks",
+		description:" Allows you to set the default DNS (Domain Name System) for 3G connections. Use this to potentially speed up your browsing experience (depending on DNS location) and improve your security. Default is Disabled.",
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SDescription:{
+		description:" * You must have a mobile data network connection before applying new DNS *"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		default:`echo $(/res/synapse/actions/network dns)`,
+		action:"network dns",
+		values:[Disabled, Google, OpenDNS, Comodo, Level3, Norton_DNS, Smart_Viper,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG

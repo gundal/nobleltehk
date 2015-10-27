@@ -5,6 +5,7 @@
 /* 2015.01.08 */
 
 /* SCR Position can be different each panel */
+
 #define MDNIE_RED_R		0xA1		/* ASCR_WIDE_CR[7:0] */
 #define MDNIE_RED_G		0xA2		/* ASCR_WIDE_CG[7:0] */
 #define MDNIE_RED_B		0xA3		/* ASCR_WIDE_CB[7:0] */
@@ -17,14 +18,28 @@
 #define MDNIE_WHITE_R		0xAA		/* ASCR_WIDE_WR[7:0] */
 #define MDNIE_WHITE_G		0xAB		/* ASCR_WIDE_WG[7:0] */
 #define MDNIE_WHITE_B		0xAC		/* ASCR_WIDE_WB[7:0] */
-
+#if defined(CONFIG_PANEL_S6E3HA2_DYNAMIC)
 #define MDNIE_COLOR_BLIND_OFFSET	MDNIE_RED_R
 
-#define COLOR_OFFSET_F1(x, y)		(((y << 10) - (((x << 10) * 353) / 326) + (30 << 10)) >> 10)
+#define COLOR_OFFSET_F1(x, y)		(((y << 10) - (((x << 10) * 353) / 326) + (30 << 10)) >> 10) 
 #define COLOR_OFFSET_F2(x, y)		(((y << 10) - (((x << 10) * 20) / 19) - (14 << 10)) >> 10)
 #define COLOR_OFFSET_F3(x, y)		(((y << 10) + (((x << 10) * 185) / 42) - (16412 << 10)) >> 10)
 #define COLOR_OFFSET_F4(x, y)		(((y << 10) + (((x << 10) * 337) / 106) - (12601 << 10)) >> 10)
 
+#elif defined(CONFIG_PANEL_S6E3HA3_DYNAMIC)
+
+#define MDNIE_COLOR_BLIND_OFFSET	MDNIE_RED_R
+
+#define MDNIE_TRANS_DIMMING_OFFSET	2
+
+#define AOLCE_MIN_BRIGHTNESS	9
+#define AOLCE_MAX_BRIGHTNESS	12
+
+#define COLOR_OFFSET_F1(x, y)		(((y << 10) - (((x << 10) * 43) / 40) + (45 << 10)) >> 10)
+#define COLOR_OFFSET_F2(x, y)		(((y << 10) - (((x << 10) * 310) / 297) - (3 << 10)) >> 10)
+#define COLOR_OFFSET_F3(x, y)		(((y << 10) + (((x << 10) * 367) / 84) - (16305 << 10)) >> 10)
+#define COLOR_OFFSET_F4(x, y)		(((y << 10) + (((x << 10) * 333) / 107) - (12396 << 10)) >> 10)
+#endif
 /* color coordination order is WR, WG, WB */
 static unsigned short coordinate_data_1[][3] = {
 	{0xff, 0xff, 0xff}, /* dummy */
@@ -210,8 +225,8 @@ static unsigned short STANDARD_UI_1[] = {
 	0xa8,0x1fed,	/*ASCR wide_Bg wide_Yg*/
 	0xa9,0xe147,	/*ASCR wide_Bb wide_Yb*/
 	0xaa,0xff00,	/*ASCR wide_Wr wide_Kr*/
-	0xab,0xf700,	/*ASCR wide_Wg wide_Kg*/
-	0xac,0xef00,	/*ASCR wide_Wb wide_Kb*/
+	0xab,0xff00,	/*ASCR wide_Wg wide_Kg*/
+	0xac,0xff00,	/*ASCR wide_Wb wide_Kb*/
 	0xff,0x0000,	/*Mask Release*/
 	END_SEQ, 0x0000,
 };

@@ -1,0 +1,110 @@
+#!/system/bin/sh
+
+cat << CTAG
+{
+    name:INPUT BOOST,
+    elements:[
+	{ SPane:{
+		title:"Input-Booster",
+		description:" A57, A53, MIF, INT & HMP boost values for Input-Booster Levels."
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SDescription:{
+		description:" 0 - OFF"
+	}},
+	{ SDescription:{
+		description:" 1 - SIP (default SIP)"
+	}},
+	{ SDescription:{
+		description:" 2 - Default"
+	}},
+	{ SDescription:{
+		description:" 3 - Hangout SIP"
+	}},
+	{ SDescription:{
+		description:" 4 - Browsable App's"
+	}},
+	{ SDescription:{
+		description:" 5 - Light SIP, MMS, .."
+	}},
+	{ SDescription:{
+		description:" 9 - Max for benchmark tool"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Hover Boost Level",
+		description:" Select how the Input-Booster reacts to hover events.\n",
+                default:`cat /sys/class/input_booster/hover/level`,
+                action:"generic /sys/class/input_booster/hover/level",
+		values:[0, 1, 2, 3, 4, 5, 9,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Key Boost Level",
+		description:" Select how the Input-Booster reacts to key events.\n",
+                default:`cat /sys/class/input_booster/key/level`,
+                action:"generic /sys/class/input_booster/key/level",
+		values:[0, 1, 2, 3, 4, 5, 9,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Keyboard Boost Level",
+		description:" Select how the Input-Booster reacts to keyboard events.\n",
+                default:`cat /sys/class/input_booster/keyboard/level`,
+                action:"generic /sys/class/input_booster/keyboard/level",
+		values:[0, 1, 2, 3, 4, 5, 9,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Multi-touch Boost Level",
+		description:" Select how the Input-Booster reacts to multi-touch events.\n",
+                default:`cat /sys/class/input_booster/multitouch/level`,
+                action:"generic /sys/class/input_booster/multitouch/level",
+		values:[0, 1, 2, 3, 4, 5, 9,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Touch Boost Level",
+		description:" Select how the Input-Booster reacts to touch events.\n",
+                default:`cat /sys/class/input_booster/touch/level`,
+                action:"generic /sys/class/input_booster/touch/level",
+		values:[0, 1, 2, 3, 4, 5, 9,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Touch-key Boost Level",
+		description:" Select how the Input-Booster reacts to touch-key events.\n",
+                default:`cat /sys/class/input_booster/touchkey/level`,
+                action:"generic /sys/class/input_booster/touchkey/level",
+		values:[0, 1, 2, 3, 4, 5, 9,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SOptionList:{
+		title:"Pen Boost Level",
+		description:" Select how the Input-Booster reacts to pen events.\n",
+                default:`cat /sys/class/input_booster/pen/level`,
+                action:"generic /sys/class/input_booster/pen/level",
+		values:[0, 1, 2, 3, 4, 5, 9,]
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG
