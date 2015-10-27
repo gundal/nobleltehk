@@ -1,0 +1,37 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:SELinux,
+    elements:[
+	{ SPane:{
+		title:"SELinux (Security-Enhanced Linux)"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SLiveLabel:{
+                title:"Status",
+		description:"",
+		refresh:3000,
+		action:"display selinux_status"
+	}},
+
+	{ SPane:{
+		title:"Enable or Disable Selinux",
+		description:" Disabling will only last until next reboot"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SCheckBox:{
+		label:"SELinux",
+		default:`cat /sys/fs/selinux/enforce`,
+		action:"init selinux";		
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+    ]
+}
+CTAG

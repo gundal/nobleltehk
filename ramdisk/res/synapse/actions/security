@@ -1,0 +1,17 @@
+# By GuNDaL
+if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
+if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
+
+
+case $1 in
+selinux)
+$BB mount -t rootfs -o remount,rw rootfs;
+Status=/res/synapse/actions/SELinux
+  if [ $2 == Enforcing ]; then
+	    setenforce 1;
+fi
+  if [ $2 == Permissive ]; then
+	    setenforce 0;
+fi
+  ;;
+esac;

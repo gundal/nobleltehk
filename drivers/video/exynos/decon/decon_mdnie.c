@@ -56,12 +56,14 @@ static int mdnie_write_table(struct mdnie_info *mdnie, struct mdnie_table *table
 	}
 
 	mutex_lock(&mdnie->dev_lock);
-	mdnie->lpd_store_data = mdnie_sequence_hook(table->tune[0].sequence);
+
 	
-	while (mdnie->lpd_store_data[i] != END_SEQ) {
-		mdnie->lpd_store_data[i+1] = mdnie_reg_hook(mdnie->lpd_store_data[i],mdnie->lpd_store_data[i+1]);
-		i += 2;
-	}
+		mdnie->lpd_store_data = mdnie_sequence_hook(table->tune[0].sequence);
+	
+		while (mdnie->lpd_store_data[i] != END_SEQ) {
+			mdnie->lpd_store_data[i+1] = mdnie_reg_hook(mdnie->lpd_store_data[i],mdnie->lpd_store_data[i+1]);
+			i += 2;
+		}
 	
 	mdnie->need_update = 1;
 	mutex_unlock(&mdnie->dev_lock);
