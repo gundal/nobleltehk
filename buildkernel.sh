@@ -1,5 +1,5 @@
 #!/bin/bash
-export KERNELDIR =`readlink -f ~/android/nobleltehk`
+export KERNELDIR=`readlink -f ~/android/nobleltehk`
 export RAMFS_SOURCE=`readlink -f ~/android/nobleltehk/ramdisk`
 
 echo "kernerldir = $KERNELDIR"
