@@ -1,4 +1,4 @@
-#!/sbin/busybox sh
+#!/system/bin/sh
 
 cat << CTAG
 
@@ -9,13 +9,12 @@ cat << CTAG
 		`source /res/synapse/json.gen.big`,
 		`source /res/synapse/json.gen.governor`,
 		`source /res/synapse/json.gen.gpu`,
+		`source /res/synapse/json.gen.screen`,
 		`source /res/synapse/json.gen.bus`,
 		`source /res/synapse/json.gen.io`,
 		`source /res/synapse/json.gen.network`,
 		`source /res/synapse/json.gen.memory`,
 		`source /res/synapse/json.gen.selinux`,
-		`source /res/synapse/json.gen.selinux2`,
-		`source /res/synapse/json.gen.selinux3`,
 		`source /res/synapse/json.gen.fs`,
 		`source /res/synapse/json.gen.logs`,
 		`source /res/synapse/json.gen.reboot`,
@@ -23,5 +22,28 @@ cat << CTAG
 		`source /res/synapse/json.gen.info`
     ]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 CTAG
 

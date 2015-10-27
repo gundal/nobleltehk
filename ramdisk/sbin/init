@@ -72,6 +72,8 @@ rootsu() {
 	fi	
 	
 }
+echo 1 > /sys/class/mdnie/mdnie/reg_intercept
+
 echo $TAG "mounting system r/w"
 
 mount -o remount,rw /system

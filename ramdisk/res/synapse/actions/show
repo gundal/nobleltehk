@@ -1,16 +1,12 @@
 if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
 if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
 
-if [[ ! -z $2 ]]; then
-	if [ $2 -eq 1 ]; then
-		start $1;
-	elif [ $2 -eq 0 ]; then
-		stop $1;
-	fi;
-fi;
 
-if [ "`ps | $BB grep $1`" ]; then
-	$BB echo "1";
-else
-	$BB echo "0";
-fi;
+case $1 in
+susp)
+  echo `cat /sys/kernel/power_suspend/power_suspend_version`
+  ;;
+asv)
+  echo `cat /sys/kernel/debug/asv_summary`
+  ;;
+esac
