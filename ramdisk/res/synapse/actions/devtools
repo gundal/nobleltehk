@@ -1,24 +1,18 @@
 if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
 if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
-
+SQL3=/system/bin/sqlite3
 # SQLite log location
 LOGS=/sdcard/GuNDaL/Logs/SQLite.txt;
 
 case $1 in
 	reboot)
-		echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active;	
-		$BB sync;
-		$BB sleep 1;
 		reboot $2;		
 	;;
 	  cleardata)
-	echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active;
 	am force-stop com.af.synapse 2> /dev/null;
 	$BB sleep 1;
 	$BB rm -R /data/data/com.af.synapse/databases;
 	$BB rm -R /data/data/com.af.synapse/cache;
-	$BB sync;
-	$BB sleep 1;
 	/system/bin/reboot;
   ;;
 	selinux)	
@@ -37,8 +31,7 @@ case $1 in
     	am force-stop com.af.synapse 2> /dev/null;
     	$BB sleep 1;
     	reset_uci;
-	$BB sync;
-    	$BB sleep 1;
+   	$BB sleep 1;
     	am start -a android.intent.action.MAIN -n com.af.synapse/.MainActivity 2> /dev/null;
   ;;
   fix_wifi)
@@ -59,18 +52,17 @@ case $1 in
 	chmod 755 $LOG
 
 	echo "SQLite database VACUUM and REINDEX started at $( date +"%m-%d-%Y %H:%M:%S" )" | tee -a $LOGS;
-	if [ -f /sbin/sqlite3 ]; then
 		
 	
 	for i in `$BB find /data -iname "*.db"`; do 
-		sbin/sqlite3 $i 'VACUUM;' 2> /dev/null;
+		$SQL3 $i 'VACUUM;' 2> /dev/null;
 			resVac=$?
 			if [ $resVac == 0 ]; then
 				resVac="SUCCESS";
 			else
 				resVac="ERRCODE-$resVac";
 			fi;
-		sbin/sqlite3 $i 'REINDEX;' 2> /dev/null;
+		$SQL3 $i 'REINDEX;' 2> /dev/null;
 			resIndex=$?
 			if [ $resIndex == 0 ]; then
 				resIndex="SUCCESS";
@@ -81,14 +73,14 @@ case $1 in
 	done;
 
 	for i in `$BB find /sdcard -iname "*.db"`; do
-		sbin/sqlite3 $i 'VACUUM;' 2> /dev/null;
+		$SQL3 $i 'VACUUM;' 2> /dev/null;
 			resVac=$?
 			if [ $resVac == 0 ]; then
 				resVac="SUCCESS";
 			else
 				resVac="ERRCODE-$resVac";
 			fi;
-		sbin/sqlite3 $i 'REINDEX;' 2> /dev/null;
+		$SQL3 $i 'REINDEX;' 2> /dev/null;
 			resIndex=$?
 			if [ $resIndex == 0 ]; then
 				resIndex="SUCCESS";
@@ -100,29 +92,20 @@ case $1 in
 		echo "SQLite database VACUUM and REINDEX finished at $( date +"%m-%d-%Y %H:%M:%S" )" | tee -a $LOGS;
 		
 	$BB echo "Databases have been optimized";
-else
-	$BB echo "Reinstall busybox with sqlite3 support then try again"
-fi
   ;;
   wipe_cache_reboot)
-	echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active;
 	$BB rm -rf /cache/*
-	$BB sync;
 	$BB sleep 1;
 	/system/bin/reboot;
   ;;
   wipe_dalvik_reboot)
-	echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active;
 	$BB rm -rf /data/dalvik-cache/*
-	$BB sync;
 	$BB sleep 1;
 	/system/bin/reboot;
   ;;
   wipe_cache-dalvik_reboot)
-	echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active;
 	$BB rm -rf /cache/*
 	$BB rm -rf /data/dalvik-cache/*
-	$BB sync;
 	$BB sleep 1;
 	/system/bin/reboot;
   ;;
@@ -133,12 +116,11 @@ fi
 	$BB rm -rf /data/lost+found/*
 	$BB rm -rf /data/system/dropbox/*
 	$BB rm -rf /data/tombstones/*
-	$BB sync;
 	$BB sleep 1;
 	echo "Clean up done";
   ;;
 scr_cache)
-  $BB mount -t rootfs -o remount,rw rootfs;
+ $BB mount -t rootfs -o remount,rw rootfs;
   P=/res/synapse/GuNDaL/scr_cache
   if [ ! -z $2 ]; then
   if [ $2 == 0 ]; then
