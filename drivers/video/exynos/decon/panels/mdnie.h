@@ -87,13 +87,13 @@ enum hmt_mode {
 #endif
 
 enum MDNIE_CMD {
-#if defined(CONFIG_PANEL_S6E3HA3_DYNAMIC) || defined(CONFIG_PANEL_S6E3HF3_DYNAMIC)
-	MDNIE_CMD3,
-#endif
 #if defined(CONFIG_EXYNOS_DECON_MDNIE_LITE)
 	LEVEL1_KEY_UNLOCK,
 	MDNIE_CMD1,
 	MDNIE_CMD2,
+#if defined(CONFIG_PANEL_S6E3HA3_DYNAMIC) || defined(CONFIG_PANEL_S6E3HF3_DYNAMIC)
+	MDNIE_CMD3,
+#endif
 	LEVEL1_KEY_LOCK,
 	MDNIE_CMD_MAX,
 #else
@@ -211,22 +211,16 @@ struct mdnie_info {
 
 };
 
-void init_mdnie_control(struct mdnie_info *mdnie);
-mdnie_t mdnie_reg_hook(unsigned short reg, mdnie_t value); 
-void mdnie_update(struct mdnie_info *mdnie);
-
 extern int mdnie_calibration(int *r);
 extern int mdnie_open_file(const char *path, char **fp);
 
 #if defined(CONFIG_EXYNOS_DECON_MDNIE)
-mdnie_t *mdnie_sequence_hook(mdnie_t *seq);
 extern struct mdnie_info* decon_mdnie_register(void);
 extern void decon_mdnie_start(struct mdnie_info *mdnie, u32 w, u32 h);
 extern void decon_mdnie_stop(struct mdnie_info *mdnie);
 extern void decon_mdnie_frame_update(struct mdnie_info *mdnie, u32 xres, u32 yres);
 extern u32 decon_mdnie_input_read(void);
 #elif defined(CONFIG_EXYNOS_DECON_MDNIE_LITE)
-extern struct mdnie_command *cmds;
 extern int mdnie_register(struct device *p, void *data, mdnie_w w, mdnie_r r, u16 *coordinate);
 #endif
 
