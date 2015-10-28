@@ -3,7 +3,7 @@ if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busy
 
 case $1 in
 gpu)
-  echo Clock: $(($(cat /sys/devices/platform/gpusysfs/gpu_clock))) MHz
+  echo Clock: $(($(cat /sys/devices/platform/gpusysfs/gpu_clock))) MHzv
   ;;
 gpu_load)
   echo Load: $(($(cat /sys/class/misc/mali0/device/utilization))) %
@@ -12,29 +12,29 @@ entropy)
   echo "`cat /proc/sys/kernel/random/entropy_avail`";
   ;;
 batttype)
-  echo Charge Type: `cat /sys/devices/battery.54/power_supply/battery/charge_type`
+  echo Charge Type: `cat /sys/devices/battery.52/power_supply/battery/charge_type`
   ;;
 battcurrav)
-  echo Current Average: $(($(cat /sys/devices/battery.54/power_supply/battery/current_avg) )) mA
+  echo Current Average: $(($(cat /sys/devices/battery.52/power_supply/battery/current_avg) )) mA
   ;;
 battcurrnow)
-  echo Current Now: $(($(cat /sys/devices/battery.54/power_supply/battery/current_now) )) mA
+  echo Current Now: $(($(cat /sys/devices/battery.52/power_supply/battery/current_now) )) mA
   ;;
 battvoltnow)
-  echo Voltage Now: $(($(cat /sys/devices/battery.54/power_supply/battery/voltage_now) /1000)) mV
+  echo Voltage Now: $(($(cat /sys/devices/battery.52/power_supply/battery/voltage_now) /1000)) mV
   ;;
 batttemp)
-  echo Temp: $(($(cat /sys/devices/battery.54/power_supply/battery/batt_temp) / 10)) °C
+  echo Temp: $(($(cat /sys/devices/battery.52/power_supply/battery/batt_temp) / 10)) °C
   ;;
 battcapa)
-  echo Capacity: $(($(cat /sys/devices/battery.54/power_supply/battery/capacity) )) %
+  echo Capacity: $(($(cat /sys/devices/battery.52/power_supply/battery/capacity) )) %
   ;;
 battstatus)
-  echo Status: `cat /sys/devices/battery.54/power_supply/battery/status`
+  echo Status: `cat /sys/devices/battery.52/power_supply/battery/status`
   ;;
 batthealth)
-  echo Health: `cat /sys/devices/battery.54/power_supply/battery/health`
-  ;;
+  echo Health: `cat /sys/devices/battery.52/power_supply/battery/health`
+;;
 LiveMemory)
   while read TYPE MEM KB; do
 	if [ "$TYPE" = "MemTotal:" ]; then
@@ -63,6 +63,9 @@ LiveUpTime)
   AWAKE=`$BB echo - | $BB awk -v "S=$AWAKE" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'`;
   SLEEP=`$BB echo - | $BB awk -v "S=$SLEEP" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'`;
   $BB echo "Total: $TOTAL (100.0%)@nSleep: $SLEEP ($PERC_S)@nAwake: $AWAKE ($PERC_A)";
+;;
+stateTime)
+`cat /sys/devices/system/cpu/cpufreq/bL_all_time_in_state`
 ;;
 LiveGPUTime)
   STATE="";
@@ -96,14 +99,6 @@ KSMStats)
 		echo KSM is Disabled
 	fi
   ;;
-check_service)
-  CORTEX_CHECK=`pgrep -f "/sbin/busybox sh /sbin/cortexbrain-tune.sh" | wc -l`;
-	if [ "$CORTEX_CHECK" != 0 ]; then
-                echo "SERVICE ONLINE";
-	else
-                echo "SERVICE OFFLINE";
-	fi;
-  ;;
 selinux_status)
   SELINUX_STATUS="$(expr `cat /sys/fs/selinux/enforce`)"
 	if [ SELINUX_STATUS -eq "0" ]; then
@@ -112,4 +107,38 @@ selinux_status)
                 echo ENFORCING MODE
 	fi
   ;;
+asvsum)
+echo ASV_Summary: `cat /sys/kernel/debug/asv_summary`
+;;
+asvgroup)
+STATE="";
+CNT=0
+FREQTABLE=`$BB awk '{S+=$5 "MHz : " $8 "mV"} END {print s}' /sys/kernel/debug/asv_group`;
+echo $FREQTABLE
+
+CNT=$((CNT+1));
+
+
+	CNT=0;
+	SUM=`$BB awk '{s+=$2} END {print s}' /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state`;
+	
+	while read FREQ TIME; do
+		if [ "$CNT" -ge $2 ] && [ "$CNT" -le $3 ]; then
+			FREQ="$((FREQ / 1000)) MHz:";
+			if [ $TIME -ge "100" ]; then
+				PERC=`$BB awk "BEGIN { print ( ($TIME / $SUM) * 100) }"`;
+				PERC="`$BB printf "%0.1f\n" $PERC`%";
+				TIME=$((TIME / 100));
+				STATE="$STATE $FREQ `$BB echo - | $BB awk -v "S=$TIME" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'` ($PERC)@n";
+			fi;
+		fi;
+		CNT=$((CNT+1));
+	done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state;
+	
+	STATE=${STATE%??};
+	echo "$STATE";
+	;;
+
+
+;;
 esac
