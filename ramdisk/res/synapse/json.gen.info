@@ -87,13 +87,8 @@ cat << CTAG
 		refresh:9999,
 		action:"init serial"
 	}},
-	{ SPane:{
-		title:"Battery info"
-	}},	
-{ SLiveLabel:{
-		refresh:5000,
-		action:"display battinfo"	
-	}},
     ]
 }
 CTAG
+
+

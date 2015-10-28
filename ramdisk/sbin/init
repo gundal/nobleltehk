@@ -1,4 +1,4 @@
-#!/sbin/busybox sh
+#!/system/bin sh
 
 
 # Originally By Andrei
@@ -72,7 +72,6 @@ rootsu() {
 	fi	
 	
 }
-echo 1 > /sys/class/mdnie/mdnie/reg_intercept
 
 echo $TAG "mounting system r/w"
 
@@ -99,11 +98,11 @@ loadSynapse
 	chmod 755 /system/etc/init.d/*
 
 	#inject busybox if not present
-	if [ ! -f /system/xbin/busybox ]; then
-		cp /sbin/busybox /system/xbin/
-		chmod 755 /system/xbin/busybox
-		/system/xbin/busybox --install -s /system/xbin
-	fi
+	#if [ ! -f /system/xbin/busybox ]; then
+	#	cp /sbin/busybox /system/xbin/
+	#	chmod 755 /system/xbin/busybox
+	#	/system/xbin/busybox --install -s /system/xbin
+	#	fi
 
 #kill securitylogagent
 rm -rf /system/app/SecurityLogAgent
@@ -127,6 +126,7 @@ chmod 0755 /init_log_primary
 chmod 0755 /init_log_secondary
 
 echo $TAG "mounting rootfs"
+cd /
 mount -t rootfs -o remount,ro rootfs
 
 . /res/gundal.sh
