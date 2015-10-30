@@ -526,6 +526,7 @@ static const char *hwcap_str[] = {
 };
 
 #ifdef CONFIG_COMPAT
+/*
 static const char *compat_hwcap_str[] = {
 	"swp",
 	"half",
@@ -549,12 +550,13 @@ static const char *compat_hwcap_str[] = {
 	"vfpd32",
 	"lpae",
 	"evtstrm"
-};
-#endif /* CONFIG_COMPAT */
+};*/
+#endif  /* CONFIG_COMPAT */
+
 
 static int c_show(struct seq_file *m, void *v)
 {
-	int i, j;
+	int i;
 
 	for_each_online_cpu(i) {
 		struct cpuinfo_arm64 *cpuinfo = &per_cpu(cpu_data, i);
@@ -565,6 +567,8 @@ static int c_show(struct seq_file *m, void *v)
 		 * online processors, looking for lines beginning with
 		 * "processor".  Give glibc what it expects.
 		 */
+	if (midr)
+		midr = midr;
 #ifdef CONFIG_SMP
 		seq_printf(m, "processor\t: %d\n", i);
 #endif

@@ -21,10 +21,11 @@
 #include <net/net_ratelimit.h>
 
 static int zero = 0;
-static int one = 1;
+//static int one = 1;
 static int ushort_max = USHRT_MAX;
 static int min_sndbuf = SOCK_MIN_SNDBUF;
 static int min_rcvbuf = SOCK_MIN_RCVBUF;
+
 
 #ifdef CONFIG_RPS
 static int rps_sock_flow_sysctl(ctl_table *table, int write,
