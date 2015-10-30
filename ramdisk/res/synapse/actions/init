@@ -46,6 +46,9 @@ fi;
 	    setenforce 0;
 fi;
 ;;
+statetime)
+echo `/sys/devices/system/cpu/cpufreq/bL_all_time_in_state`
+;;
 developer)
   echo `sed -n '1p' /res/synapse/actions/info`
   ;;

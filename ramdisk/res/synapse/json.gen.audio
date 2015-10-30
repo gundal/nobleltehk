@@ -2,7 +2,7 @@
 
 cat << CTAG
 {
-    name:AUDIO,
+    name:Equalizer,
     elements:[
 	{ SPane:{ 
 		title:"Jack Media Volume Control",

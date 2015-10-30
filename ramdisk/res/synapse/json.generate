@@ -10,6 +10,7 @@ cat << CTAG
 		`source /res/synapse/json.gen.governor`,
 		`source /res/synapse/json.gen.gpu`,
 		`source /res/synapse/json.gen.bus`,
+		`source /res/synapse/json.gen.audio`,
 		`source /res/synapse/json.gen.io`,
 		`source /res/synapse/json.gen.network`,
 		`source /res/synapse/json.gen.memory`,
@@ -17,7 +18,8 @@ cat << CTAG
 		`source /res/synapse/json.gen.fs`,
 		`source /res/synapse/json.gen.logs`,
 		`source /res/synapse/json.gen.reboot`,
-		`source /res/synapse/json.gen.profile`,
+		`source /res/synapse/json.gen.backup`,
+		`source /res/synapse/json.gen.bat`,
 		`source /res/synapse/json.gen.info`
     ]
 }
