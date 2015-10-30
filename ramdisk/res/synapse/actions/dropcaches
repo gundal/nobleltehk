@@ -1,6 +1,4 @@
-if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
-if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
-
+if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; elif [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
 PATH=/proc/sys/vm/drop_caches;
 
 if [ -f $1 ]; then
