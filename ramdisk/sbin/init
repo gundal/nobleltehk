@@ -1,7 +1,6 @@
-#!/system/bin sh
+#!/sbin/busybox sh
 
-
-# Originally By Andrei
+#originally By Andrei
 
 export PATH=/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
 
@@ -10,16 +9,17 @@ exec 2<&-
 exec 1<>/init_log_secondary
 exec 2>&1
 
-TAG="[Init-Secondary] :"
+TAG="[Init2] :"
 
 echo "Secondary init redirected" > /init_redir
 echo $TAG "redirect done"
 
 echo $TAG "busybox done"
 
-loadSynapse() {
+
+loadSynapse () {
 	echo $TAG "synapse start"
-	
+
 	chmod -R 775 /res/synapse/*
 	
 	echo $TAG "UCI init"
@@ -28,104 +28,22 @@ loadSynapse() {
 	echo $TAG "synapse done"
 }
 
-set_perm() {
-  chown $1.$2 $4
-  chown $1:$2 $4
-  chmod $3 $4
-}
 
-cp_perm() {
-  rm $5
-  cat $4 > $5
-  set_perm $1 $2 $3 $5 $6
-}
 
-rootsu() {
-	echo $TAG "Checking SU"
-	
-	if [ ! -f /system/xbin/su ]; then
-		echo $TAG "Injecting SU"
-		
-		set_perm 0 0 0777 /system/bin/.ext
-		cp_perm 0 0 06755 /res/su/su /system/bin/.ext/.su
-		cp_perm 0 0 06755 /res/su/su /system/xbin/su
-		cp_perm 0 0 0755 /res/su/su /system/xbin/daemonsu
-		cp_perm 0 0 0755 /res/su/su /system/xbin/sugote
-		cp_perm 0 0 0755 /system/bin/sh /system/xbin/sugote-mksh
-	
-		cp_perm 0 0 0755 /res/su/supolicy /system/xbin/supolicy
-		cp_perm 0 0 0644 /res/su/libsupol.so /system/lib64/libsupol.so
-		
-		rm /system/bin/app_process
-		ln -s /system/xbin/daemonsu /system/bin/app_process
-		
-		mv /system/bin/app_process64 /system/bin/app_process64_original
-		ln -s /system/xbin/daemonsu /system/bin/app_process64
-		
-		cp_perm 0 2000 0755 /system/bin/app_process64_original /system/bin/app_process_init
-		
-		/system/xbin/su --install
-		
-		echo $TAG "Finished SU injection"
-	else
-		echo $TAG "SU is already available"
-	fi	
-	
-}
+echo $TAG "mounting.."
 
-echo $TAG "mounting system r/w"
-
-mount -o remount,rw /system
-
-echo $TAG "Pre-SU."
-rootsu
-echo $TAG "Post-SU."
-
-mount -o remount,rw /system
+mount -o rw,remount system /system
 
 loadSynapse
 
-
-
-	#make necessary folders
-	mkdir /system/etc/init.d
-
-	#cp /sbin/su/99SuperSUDaemon /system/etc/init.d/
-
-
-	#enforce init.d script perms on any post-root added files
-	chmod 755 /system/etc/init.d
-	chmod 755 /system/etc/init.d/*
-
-	#inject busybox if not present
-	#if [ ! -f /system/xbin/busybox ]; then
-	#	cp /sbin/busybox /system/xbin/
-	#	chmod 755 /system/xbin/busybox
-	#	/system/xbin/busybox --install -s /system/xbin
-	#	fi
-
-#kill securitylogagent
-rm -rf /system/app/SecurityLogAgent
-
-
-#init.d
-echo "/system/etc/init.d: start" > /dev/kmsg
-for f in /system/etc/init.d/*;
-do
-	echo "${f}: start" > /dev/kmsg;
-	/system/bin/sh ${f}; 
-done
-
-
-
 echo $TAG "mounting system r/o"
-mount -o remount,ro /system
+mount -o ro,remount system /system
 
 chmod 0755 /proc/last_kmsg
 chmod 0755 /init_log_primary
 chmod 0755 /init_log_secondary
 
-echo $TAG "mounting rootfs"
+echo $TAG "mounting rootfs r/o"
 cd /
 mount -t rootfs -o remount,ro rootfs
 
