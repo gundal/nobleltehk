@@ -22,10 +22,10 @@ echo "Init redirected"
 
 cat /proc/partitions
 
+mkdir GuNDaL
+
 rm /init
 mv /init2 /init
-
-mkdir GuNDaL
 
 exec /init
 exit

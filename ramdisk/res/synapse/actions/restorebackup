@@ -1,6 +1,5 @@
 BuD=/data/media/0/GuNDaL;
-if [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
-if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; else BB=/sbin/busybox; fi;
+if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; elif [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
 
 if [ ! -f /system/bin/sqlite3 ]; then
 	echo "Please install sqlite3 to /system/bin and try again."
