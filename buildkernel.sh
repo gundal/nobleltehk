@@ -14,7 +14,7 @@ if [ "${1}" = "skip" ] ; then
 else
 	echo "Compiling Kernel"
 	cp arch/arm64/configs/gundal_defconfig .config
-	make "$@" -j5 || exit 1
+	#make "$@" -j5 || exit 1
 fi
 
 echo "Building new ramdisk"
@@ -36,8 +36,8 @@ rm -rf $RAMFS_TMP/tmp/*
 
 echo "packing ramdisk"
 cd $RAMFS_TMP
-find . | fakeroot cpio -H newc -o | lzop -9 > $RAMFS_TMP.cpio.gz
-ls -lh $RAMFS_TMP.cpio.gz
+find . | fakeroot cpio -H newc -o | lzop -9 > $RAMFS_TMP.cpio.lzo
+ls -lh $RAMFS_TMP.cpio.lzo
 cd $KERNELDIR
 
 echo "Making new boot image"
@@ -49,6 +49,6 @@ fi
 echo "copying boot.img to ~/android/gundal/boot.img"
 cp boot.img ../gundal/boot.img
 echo "done"
-ls -al boot.img
+ls -al ../gundal/boot.img
 echo ""
 	
