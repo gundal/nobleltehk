@@ -70,6 +70,19 @@ cat << CTAG
 	{ SSpacer:{
 		height:1
 	}},
+	{ SPane:{
+		title:"Dynamic FSYNC",
+		description:" Requires PowerSuspend driver ENABLED"
+	}},
+	{ SSpacer:{
+		height:1
+	}},
+	{ SCheckBox:{
+		description:" While screen is on file sync is disabled, when screen is off a file sync is called to flush all outstanding writes and restore file sync operation as normal. Increases speed, but a possible decrease in data integrity, also could create reboot and kernel panic. Default is Enabled.\n",
+		label:"Enable dynamic fsync",
+		default:`cat /sys/kernel/dyn_fsync/Dyn_fsync_active`,
+		action:"generic /sys/kernel/dyn_fsync/Dyn_fsync_active"
+	}},
 	{ STitleBar:{
 		title:"Virtual Memory",
 		description:" Tune the operation of the VM subsystem of the Linux kernel and the writeout of dirty data to disk."
