@@ -392,7 +392,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fdiagnostics-show-option \
  		   -std=gnu89
 
-KBUILD_CFLAGS += -pipe -fno-pic -O3 -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 -march=armv8-a+crc 
+KBUILD_CFLAGS += -pipe -fno-pic -O2 -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 -march=armv8-a+crc 
 KBUILD_CFLAGS += -Wno-unused -Wno-maybe-uninitialized
 
 KBUILD_AFLAGS_KERNEL :=
@@ -594,7 +594,7 @@ all: vmlinux
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
-KBUILD_CFLAGS	+= -O3 $(call cc-disable-warning,maybe-uninitialized,)
+KBUILD_CFLAGS	+= -O2 $(call cc-disable-warning,maybe-uninitialized,)
 endif
 
 include $(srctree)/arch/$(SRCARCH)/Makefile
@@ -747,7 +747,7 @@ export	INSTALL_PATH ?= /boot
 # relocations required by build roots.  This is not defined in the
 # makefile but the argument can be passed to make if needed.
 #
-
+#INSTALL_MOD_PATH=INSTALL
 MODLIB	= $(INSTALL_MOD_PATH)/lib/modules/$(KERNELRELEASE)
 export MODLIB
 
@@ -925,7 +925,7 @@ depend dep:
 
 # ---------------------------------------------------------------------------
 # Firmware install
-INSTALL_MOD_PATH=/home/ld/android/nobleltehk/INSTALL
+#INSTALLPREPATH=/home/ld/android/nobleltehk/INSTALL
 INSTALL_FW_PATH=$(INSTALL_MOD_PATH)/lib/firmware
 
 export INSTALL_FW_PATH
