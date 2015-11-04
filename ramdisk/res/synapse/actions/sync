@@ -1,6 +1,6 @@
 case $1 in
 fsync)
-  P=/sys/module/sync/parameters/fsync_enabled
+  P=/sys/kernel/dyn_fsync/Dyn_fsync_active
   if [ ! -z $2 ]
   then
   if [ $2 == 1 ]

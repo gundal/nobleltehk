@@ -925,7 +925,9 @@ depend dep:
 
 # ---------------------------------------------------------------------------
 # Firmware install
+INSTALL_MOD_PATH=/home/ld/android/nobleltehk/INSTALL
 INSTALL_FW_PATH=$(INSTALL_MOD_PATH)/lib/firmware
+
 export INSTALL_FW_PATH
 
 PHONY += firmware_install

@@ -1,0 +1,88 @@
+#!/system/bin/sh
+if [ -f "/system/bin/busybox" ]; then BB=/system/bin/busybox; elif [ -f "/system/xbin/busybox" ]; then BB=/system/xbin/busybox; else BB=/sbin/busybox; fi;
+
+cat << CTAG
+{
+    name:Backup,
+    elements:[
+		{ STitleBar:{
+			title:"Backups"
+		}},
+			{ SOptionList:{
+				title:"Selected backup",
+				description:"Choose the settings you want and apply your choice in Synapse before using the action buttons below.",
+				action:"restorebackup pickprofile",
+				default:"None",
+				values:[ "None",
+					`for BAK in \`res/synapse/actions/restorebackup listprofile\`; do
+						echo "\"$BAK\","
+					done`
+				],
+				notify:[
+					{
+						on:APPLY,
+						do:[ REFRESH, APPLY ],
+						to:"generic /data/media/0/GuNDaL/profile_backup"
+					}
+				]
+			}},
+			{ SDescription:{
+				description:"NOTE: After you restore a backup, when you reload synapse, you will find your old settings reset ontop of the settings from your backup. You have to press the X button on top to return to backup settings or the checkmark to retain your current settings before restoring backup."
+			}},
+			{ SButton:{
+				label:"Restore Selected tar",
+				action:"restorebackup applyprofile",
+				notify:[
+					{
+						on:APPLY,
+						do:[ REFRESH, APPLY ],
+						to:"restorebackup pickprofile"
+					}
+				]
+			}},
+			{ SButton:{
+				label:"Delete Selected tar",
+				action:"restorebackup delprofile",
+				notify:[
+					{
+						on:APPLY,
+						do:[ REFRESH, APPLY ],
+						to:"restorebackup pickprofile"
+					}
+				]
+			}},
+		
+		{ SPane:{
+			title:"Backup Actions"
+		}},
+			{ SGeneric:{
+				title:"Backup Name",
+				default:"None",
+				action:"generic /data/media/0/GuNDaL/profile_backup",
+			}},
+			{ SDescription:{
+				description:"First set a name above and apply with checkmark. You can then press the Backup Current Settings button."
+			}},
+			{ SButton:{
+				label:"Backup Current Settings",
+				action:"restorebackup keepprofile",
+				notify:[
+					{
+						on:APPLY,
+						do:[ REFRESH, APPLY ],
+						to:"generic /data/media/0/GuNDaL/profile_backup"
+					}
+				]
+			}},
+			
+		{ SPane:{
+			title:"General Actions",
+			description:"To update/refresh lists, you must reboot to see your new backup, push Restart below to do so."
+		}},
+			{ SButton:{
+				label:"Restart Synapse",
+				action:"devtools reboot"
+			}},
+    ]
+}
+CTAG
