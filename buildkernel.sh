@@ -14,7 +14,7 @@ if [ "${1}" = "skip" ] ; then
 else
 	echo "Compiling Kernel"
 	cp arch/arm64/configs/gundal_defconfig .config
-	#make "$@" -j5 || exit 1
+	make "$@" -j5 || exit 1
 fi
 
 echo "Building new ramdisk"
