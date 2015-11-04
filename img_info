@@ -11,4 +11,4 @@ ramdisk_offset=0x01000000
 tags_offset=0x00000100
 cmd_line=''
 board="FPRPNLCC000K"
-format=lzop
+format=gzip
