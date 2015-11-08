@@ -14,7 +14,7 @@ if [ "${1}" = "skip" ] ; then
 else
 	echo "Compiling Kernel"
 	cp arch/arm64/configs/gundal_defconfig .config
-	make "$@" -j5 || exit 1
+	make "$@" -j19 || exit 1
 fi
 
 echo "Building new ramdisk"
@@ -41,14 +41,14 @@ ls -lh $RAMFS_TMP.cpio.lzo
 cd $KERNELDIR
 
 echo "Making new boot image"
-~/bin/mk/mkbootimg --kernel arch/arm64/boot/Image --dt dt.img --ramdisk $RAMFS_TMP.cpio.lzo --base 0x10000000 --pagesize 2048 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --second_offset 0x00f00000 -o boot.img
+~/bin/mkbootimg_tools/mkbootimg --kernel arch/arm64/boot/Image --dt dt.img --ramdisk $RAMFS_TMP.cpio.lzo --base 0x10000000 --pagesize 2048 --ramdisk_offset 0x01000000 --tags_offset 0x00000100 --second_offset 0x00f00000 -o boot.img
 echo -n "SEANDROIDENFORCE" >> boot.img
 #if echo "$@" | grep -q "CC=\$(CROSS_COMPILE)gcc" ; then
 	dd if=/dev/zero bs=$((29360128-$(stat -c %s boot.img))) count=1 >> boot.img
 #fi
 echo "copying boot.img to ~/android/gundal/boot.img"
-cp boot.img ../gundal/boot.img
+cp boot.img /android/boot.img
 echo "done"
-ls -al ../gundal/boot.img
+ls -al /android/boot.img
 echo ""
 	
