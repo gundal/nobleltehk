@@ -35,6 +35,10 @@
 #ifdef CONFIG_HAS_EARLYSUSPEND
 #include <linux/earlysuspend.h>
 #endif
+
+#ifdef CONFIG_HAS_POWERSUSPEND
+#include <linux/powersuspend.h>
+#endif
 #include <linux/io.h>
 #include <linux/regulator/consumer.h>
 #include <linux/regulator/driver.h>
@@ -1288,14 +1292,14 @@ static void touchkey_input_close(struct input_dev *dev)
 #endif
 
 #ifdef CONFIG_PM
-#ifdef CONFIG_HAS_EARLYSUSPEND
+#ifdef (CONFIG_HAS_POWERSUSPEND || CONFIG_HAS_EARLYSUSPEND)
 #define touchkey_suspend	NULL
 #define touchkey_resume	NULL
 
-static int sec_touchkey_early_suspend(struct early_suspend *h)
+static int sec_touchkey_early_suspend(struct power_suspend *h)
 {
 	struct touchkey_i2c *tkey_i2c =
-		container_of(h, struct touchkey_i2c, early_suspend);
+		container_of(h, struct touchkey_i2c, power_suspend);
 
 	touchkey_stop(tkey_i2c);
 
@@ -1304,10 +1308,10 @@ static int sec_touchkey_early_suspend(struct early_suspend *h)
 	return 0;
 }
 
-static int sec_touchkey_late_resume(struct early_suspend *h)
+static int sec_touchkey_late_resume(struct power_suspend *h)
 {
 	struct touchkey_i2c *tkey_i2c =
-		container_of(h, struct touchkey_i2c, early_suspend);
+		container_of(h, struct touchkey_i2c, power_suspend);
 
 	tk_debug_dbg(true, &tkey_i2c->client->dev, "%s\n", __func__);
 
@@ -2607,12 +2611,12 @@ static int i2c_touchkey_probe(struct i2c_client *client,
 	}
 #endif
 
-#ifdef CONFIG_HAS_EARLYSUSPEND
-	tkey_i2c->early_suspend.suspend =
+#ifdef CONFIG_HAS_POWERSUSPEND
+	tkey_i2c->power_suspend.suspend =
 		(void *)sec_touchkey_early_suspend;
-	tkey_i2c->early_suspend.resume =
+	tkey_i2c->power_suspend.resume =
 		(void *)sec_touchkey_late_resume;
-	register_early_suspend(&tkey_i2c->early_suspend);
+	register_power_suspend(&tkey_i2c->power_suspend);
 #endif
 
 	/*sysfs*/

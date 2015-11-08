@@ -18,6 +18,10 @@
 #include <linux/earlysuspend.h>
 #endif
 
+#ifdef CONFIG_HAS_POWERSUSPEND
+#include <linux/powersuspend.h>
+#endif
+
 #ifdef CONFIG_SEC_DEBUG_TSP_LOG
 #define SEC_DEBUG_TK_LOG
 #endif
@@ -209,6 +213,9 @@ struct touchkey_i2c {
 	struct completion init_done;
 #ifdef CONFIG_HAS_EARLYSUSPEND
 	struct early_suspend early_suspend;
+#endif
+#ifdef CONFIG_HAS_POWERSUSPEND
+	struct power_suspend power_suspend;
 #endif
 	struct mutex lock;
 	struct mutex i2c_lock;
