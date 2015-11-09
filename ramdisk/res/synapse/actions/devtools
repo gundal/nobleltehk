@@ -8,7 +8,7 @@ case $1 in
 		echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active;
 		$BB sync;
 		$BB sleep 1;
-		reboot $2;		
+		/system/bin/reboot $2;		
 	;;
   cleardata)
 	echo "0" > /sys/kernel/dyn_fsync/Dyn_fsync_active;
