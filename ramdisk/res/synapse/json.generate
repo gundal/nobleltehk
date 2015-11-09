@@ -16,6 +16,7 @@ cat << CTAG
 		`source /res/synapse/json.gen.memory`,
 		`source /res/synapse/json.gen.selinux`,
 		`source /res/synapse/json.gen.fs`,
+		`source /res/synapse/json.gen.psuspend`,
 		`source /res/synapse/json.gen.logs`,
 		`source /res/synapse/json.gen.reboot`,
 		`source /res/synapse/json.gen.backup`,
